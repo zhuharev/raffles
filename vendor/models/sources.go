@@ -7,7 +7,7 @@ import (
 type Source struct {
 	Id    int64
 	Title string
-	VkId  int64
+	VkId  int64 `xorm:"unique"`
 
 	IsPremium  bool
 	PremiumEnd time.Time
@@ -16,4 +16,9 @@ type Source struct {
 
 	CreatedBy int64 // кем создана
 	Created   time.Time
+}
+
+func SourcesCreate(source *Source) error {
+	_, e := x.Insert(source)
+	return e
 }

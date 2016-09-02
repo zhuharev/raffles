@@ -1,6 +1,6 @@
 package models
 
-type Like struct {
+type Likes struct {
 	UserId int64
 	TaskId int64
 }

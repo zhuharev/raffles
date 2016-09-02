@@ -21,7 +21,7 @@ var (
 	tables = []interface{}{
 		new(Action),
 		new(User),
-		new(Like),
+		new(Likes),
 		new(Source),
 		new(Action)}
 )
@@ -54,7 +54,10 @@ func NewEngine() (e error) {
 	x.SetLogger(logger)*/
 	x.ShowSQL = true
 
-	x.Sync2(tables...)
+	e = x.Sync2(tables...)
+	if e != nil {
+		fmt.Println(e)
+	}
 
 	return nil
 }

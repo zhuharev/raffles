@@ -3,6 +3,7 @@ package routes
 import (
 	"models"
 	"modules/setting"
+	"modules/vk"
 )
 
 func GlobalInit() error {
@@ -15,5 +16,11 @@ func GlobalInit() error {
 	if e != nil {
 		return e
 	}
+
+	e = vk.NewContext()
+	if e != nil {
+		return e
+	}
+
 	return nil
 }

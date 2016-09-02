@@ -1,11 +1,12 @@
 package main
 
-import "github.com/gin-gonic/gin"
-
 import (
 	//"models"
 	"routes"
+	"routes/sources"
 	"routes/tasks"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -16,6 +17,7 @@ func main() {
 	}
 
 	r := gin.Default()
+	r.Static("/public", "./public")
 	//r.Use(...)
 
 	gr := r.Group("/api/v1")
@@ -32,7 +34,7 @@ func main() {
 		sourcesGr := gr.Group("/sources")
 		{
 			sourcesGr.GET("/list")
-			sourcesGr.POST("/add")
+			sourcesGr.POST("/add", sources.Add)
 			sourcesGr.GET("/get/:id")
 		}
 
