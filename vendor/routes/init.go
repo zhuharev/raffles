@@ -2,6 +2,7 @@ package routes
 
 import (
 	"models"
+	"modules/looper"
 	"modules/setting"
 	"modules/vk"
 )
@@ -18,6 +19,11 @@ func GlobalInit() error {
 	}
 
 	e = vk.NewContext()
+	if e != nil {
+		return e
+	}
+
+	e = looper.Start()
 	if e != nil {
 		return e
 	}

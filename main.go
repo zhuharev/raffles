@@ -1,7 +1,9 @@
 package main
 
 import (
+
 	//"models"
+	"GinHTMLRender"
 	"routes"
 	"routes/sources"
 	"routes/tasks"
@@ -16,9 +18,16 @@ func main() {
 		panic(e)
 	}
 
+	htmlRender := GinHTMLRender.New()
+	htmlRender.Debug = gin.IsDebugging()
+	htmlRender.Layout = "layouts/default"
+
 	r := gin.Default()
+	r.HTMLRender = htmlRender.Create()
 	r.Static("/public", "./public")
 	//r.Use(...)
+
+	r.Any("/edittask/:id", tasks.Edit)
 
 	gr := r.Group("/api/v1")
 	{
@@ -33,7 +42,7 @@ func main() {
 
 		sourcesGr := gr.Group("/sources")
 		{
-			sourcesGr.GET("/list")
+			sourcesGr.GET("/list", sources.List)
 			sourcesGr.POST("/add", sources.Add)
 			sourcesGr.GET("/get/:id")
 		}
@@ -45,6 +54,9 @@ func main() {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
+	})
+	r.GET("/temp", func(c *gin.Context) {
+		c.HTML(200, "test", nil)
 	})
 	r.Run() // listen and server on 0.0.0.0:8080
 }

@@ -1,0 +1,83 @@
+{{ define "content" }}
+
+<form id="myForm" method="post" action="" onsubmit="sub();return false;">
+	<div>
+	<label for="">Owner ID</label>
+		<input type="text" name="owner_id" value="{{.OwnerId}}" id="">
+	</div>
+	<div>
+	<label for="">Post Id</label>
+		<input type="text" name="owner_id" value="{{.PostId}}" id="">
+	</div>
+	<div>
+	<label for="">Decription</label><br>
+		<textarea name="description" id="" cols="120" rows="20">{{.Description}}</textarea>
+	</div>
+	<div>
+		<label for="">Время выполнения</label><br>
+		<input type="text" name="dodate" id="" value="{{.DoTime}}">
+	</div>
+	<div>
+		<label for="">Время Отмены действий</label><br>
+		<input type="text" name="dodate" id="" value="{{.UnDoTime}}">
+	</div>
+	<div>
+		<label for="">Время события</label><br>
+		<input type="text" name="dodate" id="" value="{{.EventTime}}">
+	</div>
+	<div class="actions">
+{{ range .Actions }}
+<div class="action"  data-name="" data-type="" data-id="" data-owner=""></div>
+{{ end }}
+	</div>
+<select name="" id="act-name">
+	<option value="repost">Репост</option>
+	<option value="join">Вступление в группу</option>
+	<option value="follow">Добавить в друзья</option>
+	<option value="like">Лайк</option>
+</select>
+<select name="" id="act-type">
+	<option value="wall">Стена</option>
+	<option value="photo">Фото</option>
+</select>
+<input type="hidden" name="actions" id="actions">
+<input type="text" id="act-id" placeholder="id объекта">
+<input type="text" id="act-owner" placeholder="id владельца стены">
+<button onclick="add_action();return false;">Добавить действие</button>
+
+<br><button >Save</button>
+</form>
+
+<script>
+q = function(s){return document.querySelector(s)}
+function add_action() {
+	var name = q("#act-name").value,
+	type = q("#act-type").value,
+	id = q("#act-id").value,
+	owner = q("#act-owner").value,
+	actions = q(".actions"),
+	new_act = document.createElement("div");
+	new_act.className = "action"
+	new_act.dataset.name = name;
+	new_act.dataset.type = type;
+	new_act.dataset.id=id;
+	new_act.dataset.owner = owner;
+	new_act.innerHTML = name + " " + id;
+	actions.appendChild(new_act);
+}
+function sub() {
+var actions = document.querySelectorAll(".action"),
+actions_inp = q("#actions"),
+res = [];
+for (var i = 0; i < actions.length; i++) {
+	actions[i]
+	obj = actions[i].dataset
+	res.push(obj);
+}
+
+actions_inp.value = JSON.stringify(res);
+document.getElementById("myForm").submit();
+}
+</script>
+
+{{end}}

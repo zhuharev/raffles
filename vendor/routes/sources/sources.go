@@ -32,3 +32,12 @@ func Add(c *gin.Context) {
 
 	c.JSON(200, gin.H{"response": gin.H{"screen_name": screenName, "id": id}})
 }
+
+func List(c *gin.Context) {
+	list, e := models.SourcesList()
+	if e != nil {
+		c.JSON(200, gin.H{"error": e.Error()})
+		return
+	}
+	c.JSON(200, list)
+}

@@ -3,6 +3,7 @@ package vk
 import (
 	//"fmt"
 	//"net/url"
+	"modules/setting"
 	"regexp"
 )
 
@@ -18,4 +19,8 @@ func ParseLink(link string) (string, error) {
 		return link, nil
 	}
 	return arr[1], nil
+}
+
+func GetValidToken() (string, error) {
+	return setting.Config.Vk.AccessToken, nil
 }

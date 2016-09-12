@@ -19,11 +19,10 @@ import (
 var (
 	x      *xorm.Engine
 	tables = []interface{}{
-		new(Action),
 		new(User),
 		new(Likes),
 		new(Source),
-		new(Action)}
+		new(Task)}
 )
 
 // Engine represents a xorm engine or session.
@@ -53,6 +52,7 @@ func NewEngine() (e error) {
 	logger := xorm.NewSimpleLogger(f)
 	x.SetLogger(logger)*/
 	x.ShowSQL = true
+	x.ShowDebug = true
 
 	e = x.Sync2(tables...)
 	if e != nil {

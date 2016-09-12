@@ -6,13 +6,18 @@ import (
 )
 
 func Feed(c *gin.Context) {
+	tasks, e := models.TasksList()
+	if e != nil {
+		c.JSON(200, gin.H{"error": e.Error()})
+		return
+	}
 	c.JSON(200, gin.H{
-		"response": []models.Task{models.ExampleTask1, models.ExampleTask2},
+		"response": tasks,
 	})
 }
 
 func Get(c *gin.Context) {
 	c.JSON(200, gin.H{
-		"response": models.ExampleTask1,
+		"response": nil,
 	})
 }
